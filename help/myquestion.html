@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>帮助中心</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script>
+var pagecount=0;
+$(document).ready(function(){
+	getqlist(1);
+	var i=1;
+	$("#showmore").click(function(){
+		if(i>=pagecount)
+		{
+			$("#showmore").html("没有更多问题了");
+			return false;
+		}
+		i++;
+		getqlist(i);
+	});
+});
+
+function getqlist(page)
+{
+	var pagesize=10;
+	var kftab="";
+	var load=layer.load(1);
+	$.ajax({
+		url:"https://passport."+weburl+"/cs/myask?limit="+pagesize+"&page="+page,
+		type:"POST",
+		dataType:"jsonp",
+		error: function(){layer.msg("请求失败")},
+		success: function(data){
+			if(data.retcode==0)
+			{
+				layer.close(load);
+				if(data.data.length==0)
+				{
+					kftab+='<li class="clearfix">';
+					kftab+='<p class="quescontent">您还没有提过问题哦</p>';
+					kftab+='</a>';
+					kftab+='</li>';
+				}
+				else
+				{
+					pagecount=Math.ceil(data.total/pagesize);
+					$.each(data.data,function(n,v){
+						kftab+='<li class="clearfix">';
+						if(data.data[n].status=="已处理")
+						{
+							kftab+='<span class="questb"><img src="../img/tbs70.png" /></span>';
+						}
+						else
+						{
+							kftab+='<span class="questb"><img src="../img/tbs68.png" /></span>';
+						}
+						/*var type;
+						switch (data.data[n].type)
+						{
+							case "1" : type="游戏问题";
+							break;
+							case "2" : type="充值问题";
+							break;
+							case "3" : type="帐号问题";
+							break;
+							case "4" : type="其他问题";
+							break;
+						}*/
+						kftab+='<a href="questiondetail.html?askid='+data.data[n].ask_id+'" class="questct"></td>';
+						kftab+='<p class="questitle">'+data.data[n].type+'问题<span class="questime">'+data.data[n].create_ts+'</span></p>';
+						kftab+='<p class="quescontent">'+data.data[n].title+'</p>';
+						kftab+='</a>';
+						kftab+='</li>';
+					});
+				}
+				$(".questionlist").append(kftab);
+			}
+			if(data.retcode==1000)
+			{
+			}
+		}
+	});
+}
+</script>
+</head>
+
+<body>
+	<div id="page">
+		<div class="tabmenu clearfix">
+			<a class="left33" href="index.html">问题类型</a>
+			<a class="left33" href="quiz.html">我要提问</a>
+			<a class="left33 onmenu" href="myquestion.html">我的问题</a>
+		</div>
+		<div class="lb_recommard">
+			<ul class="questionlist">
+				<!-- <li class="clearfix">
+					<span class="questb"><img src="../img/tbs53.png" /></span>
+					<a href="questiondetail.html" class="questct">
+						<p class="questitle">帐号问题<span class="questime">2015-7-10 15:25</span></p>
+						<p class="quescontent">提过任何问题或建议，如果有任何问题或建议，随时可以向客服咨询</p>
+					</a>
+				</li>
+				<li class="clearfix">
+					<span class="questb"><img src="../img/tbs53.png" /></span>
+					<a href="questiondetail.html" class="questct">
+						<p class="questitle">充值问题<span class="questime">2015-7-10 15:25</span></p>
+						<p class="quescontent">提过任何问题或建议，如果有任何问题或建议，随时可以向客服咨询</p>
+					</a>
+				</li>
+				<li class="clearfix">
+					<span class="questb"><img src="../img/tbs53.png" /></span>
+					<a href="questiondetail.html" class="questct">
+						<p class="questitle">游戏问题<span class="questime">2015-7-10 15:25</span></p>
+						<p class="quescontent">提过任何问题或建议，如果有任何问题或建议，随时可以向客服咨询</p>
+					</a>
+				</li>
+				<li class="clearfix">
+					<span class="questb"><img src="../img/tbs53.png" /></span>
+					<a href="questiondetail.html" class="questct">
+						<p class="questitle">登录问题<span class="questime">2015-7-10 15:25</span></p>
+						<p class="quescontent">提过任何问题或建议，如果有任何问题或建议，随时可以向客服咨询</p>
+					</a>
+				</li> -->
+			</ul>
+		</div>
+		<a href="javascript:;" class="lb_more" id="showmore">显示更多问题</a>
+    </div>
+</body>
+</html>

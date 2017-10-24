@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<meta name="format-detection" content="address=no"/>
+		<title>推广游戏列表</title>
+		<link rel="stylesheet" type="text/css" href="css/all_style.css"/>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/layer/layer.js"></script>
+		<script type="text/javascript" src="js/api_func.js"></script>
+	</head>
+	<body>
+		 <div class="top_bar">
+		 	<a href="my_info.html" class="back_icon">
+		 		<img src="images/back.png" />
+		 	</a>
+		 	<div class="title_1">个人信息</div>
+		 
+		 </div>
+		 <div class="main_list">
+		 		  <div class="my_info2 bg_white">
+		 		  		 <span class="av_txt">头像</span>
+			 		  	  <a href="#" class="arrow-a">
+			 		  	  	 <span class="avatar-1"><img src="images/avtar.png"/></span>
+			 		  	  	<span class="arrow-1">
+			 		  	  	 		<img src="images/arrow.png"/>
+			 		  	  	 </span>
+			 		  	  </a>
+		 		  </div>
+		 		  <div class="info_part1">
+			 		  <div class="in_list_item  bg_white">
+			 		  	  <span class="m-2">真实姓名</span>
+			 		  
+			 		  	  	<span class="m-3" id="realname">未认证</span> 
+			 		  </div>
+			 		    <div class="in_list_item  bg_white">
+			 		  	  <span class="m-2">推广账号</span>
+			 		  	
+			 		  	  	<span class="m-3" id="tg_account">1</span> 
+			 		  	
+			 		  </div>
+			 		    <div class="in_list_item  bg_white">
+			 		  	  <span class="m-2">账户名</span>
+			 		  	  <span  class="m-3" id="user_account">1</span> 
+			 		  </div>
+		 		 </div> 
+		 		  <div class="info_part2 bg_white"> 
+		 		  	    <div class="in_list_item1  bg_white">
+			 		  	  <span class="m-2">性别</span>
+			 		  	  
+			 		  	  	  <a  id="gender_url">
+			 		  	  	  	<span class="m-3-1" id="gender">男</span>
+			 		  	  	  	<span  class="m-3">
+			 		  	  			<img src="images/arrow.png"/>
+			 		  	  		</span> 
+			 		  	   </a>
+			 		  </div>
+			 		 <!-- <div class="in_list_item1  bg_white">
+			 		  	  <span class="m-2">地区</span>
+			 		  	 
+			 		  	  	  <a href="my_qq.html">
+			 		  	  	  	 <span class="m-3-1">上海-浦东</span>
+			 		  	  	  	<span  class="m-3">
+			 		  	  			<img src="images/arrow.png"/>
+			 		  	  </span> </a>
+			 		  </div>-->
+			 		      <div class="in_list_item1  bg_white">
+			 		  	  <span class="m-2">QQ号</span>
+			 		  	  <a href="my_qq.html">
+			 		  	  		 <span class="m-3-1" id="qq">396057259</span>
+			 		  	  	<span  class="m-3">
+			 		  	  			<img src="images/arrow.png"/>
+			 		  	  </span> </a>
+			 		  </div>
+		 		  </div>
+			 	 <div class="info_part3"> 
+			 	 	   <div class="in_list_item1  bg_white">
+			 		  	  <span class="m-2">实名认证</span>
+			 		  	    <a href="true_name.html">
+			 		  	     <span class="m-3-2" id="realname2">立即认证</span>
+			 		  	    	<span  class="m-3">
+			 		  	  			<img src="images/arrow.png"/>
+			 		  	  </span> </a>
+			 		  </div>
+			 		  <div class="in_list_item1  bg_white">
+			 		  	  <span class="m-2">绑定手机</span>
+			 		  	    <a href="my_mobile.html">
+			 		  	    	<span class="m-3-2" id="mobile">立即绑定</span>
+			 		  	    	<span  class="m-3">
+			 		  	  			<img src="images/arrow.png"/>
+			 		  	  </span> </a>
+			 		  </div>
+			 		      <div class="in_list_item1  bg_white">
+			 		  	  <span class="m-2">支付宝帐号</span>
+			 		  	    <a href="my_alipay.html">
+			 		  	    	  	<span class="m-3-1" id="alipay">1</span>
+			 		  	    	<span  class="m-3">
+			 		  	 
+			 		  	  			<img src="images/arrow.png"/>
+			 		  	  </span> </a>
+			 		  </div>
+			 		     <div class="in_list_item1  bg_white">
+			 		  	  <span class="m-2">收货地址</span>
+			 		  	    <a href="my_address.html"><span  class="m-3">
+			 		  	  			<img src="images/arrow.png"/>
+			 		  	  </span> </a>
+			 		  </div>
+				 </div>
+		</div>
+<script type="text/javascript">
+		$(document).ready(function(){
+				get_userinfo();
+		});
+		
+</script>
+	</body>
+</html>

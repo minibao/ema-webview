@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<meta name="format-detection" content="address=no"/>
+		<title>支付宝帐号</title>
+		<link rel="stylesheet" type="text/css" href="css/all_style.css"/>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/layer/layer.js"></script>
+		<script type="text/javascript" src="js/api_func.js"></script>
+	</head>
+	<body>
+		 <div class="top_bar">
+		 	<a href="my_info_list.html" class="back_icon">
+		 		<img src="images/back.png" />
+		 	</a>
+		 	<div class="title_1">支付宝帐号填写</div>
+
+		 </div>
+		 <div class="main_list">
+		 	
+				<div  class="inp-box-1">
+							
+							<div class="bg_white i-b-1 b-bottom">
+									<input type="text" name="alipay_account" id="alipay_account"  placeholder="请输入支付宝帐号"/>
+							</div>
+							
+							<a href="javascript:void(0)" class="btn_orange">确认并提交</a>
+				</div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function(){
+					 isTgUser();
+					 $.ajax({
+					            url:http_url+"tg/user/getinfo",
+					            type:"get",
+					            dataType:"jsonp",
+					            error: function(){layer.msg("请求失败！");},
+					            success: function(data){
+					                if(data.errno==1000)
+					                {
+					                    layer.msg("您还未登录！",function(){
+					                   	 	 location.href="login.html";
+					                   	 });
+					                }
+					                else
+					                {
+					                    if(data.errno==0 )
+					                    {
+					       						$("#alipay_account").val(data.info.alipay_account);
+					                    }
+					                }
+			                }
+			      });	
+			      $(".btn_orange").click(function(){
+			      	var  alipay_account = $("#alipay_account").val();
+			      			tg_info_edit(alipay_account,'alipay');
+			      }); 
+			  
+		});
+		
+</script>
+	</body>
+</html>

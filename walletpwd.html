@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>修改密码</title>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script>
+$(document).ready(function(){
+    $("#btn_forgetpwd").click(function(){
+        var tokenCookie=getCookie("token");
+		$.ajax({
+			url:"https://"+localurl+"/ema-platform/billing/sendNewChargePwd",
+			type:"post",
+			dataType:"json",
+			data:{
+					'token':tokenCookie,
+				},
+			success: function(data){
+				var a = data.message;
+				layer.msg(a);
+			},
+			error: function(data){
+				// console.log(data)
+				layer.msg("请求失败")
+			}
+		});
+    });
+    $("#btn_chgpwd").click(function(){                   //钱包密码提交
+        var cur_passwd=$("#cur_passwd").val(),
+			new_passwd=$("#new_passwd").val();
+        var token = getCookie("token");
+		if(!userpwdblur(new_passwd))
+		{
+			return false;
+		}
+		var load=layer.load(1);
+		$.ajax({
+			url:"https://"+localurl+"/ema-platform/billing/modifyChargePwd",
+			type:"post",
+			dataType:"json",
+			data:{
+				token:token,
+				oldPwd:encodeURIComponent(cur_passwd),
+				pwd:encodeURIComponent(new_passwd)
+			},
+			
+			success: function(data){
+				layer.msg(data.message);
+				layer.close(load);
+				
+			},
+			error: function(){
+			layer.msg("tommy -请求失败！")
+			layer.close(load);
+			},
+			
+		});
+    });
+
+});
+</script>
+</head>
+
+<body>
+	<div id="page">
+    	<p style="padding:0.6rem;font-size:1.4em;line-height:200%;">您正在修改钱包密码，修改完成后请您牢记新密码。<span id="useraccount"></span></p>
+        <ul	class="menulist" style="margin-top:0;">
+            <li><span class="lineform"><b>原密码：</b> <span id="showQQ" class="detailinfo"><input type="password" placeholder="请输入原密码" id="cur_passwd" />
+            <em id="btn_forgetpwd" class="btn_dxyzm">忘记密码？</em> </span></span></li>
+            <li><span class="lineform"><b>新密码：</b> <span id="showQQ" class="detailinfo"><input type="password" placeholder="请输入6-16位新密码" id="new_passwd" /></span></span></li>
+        </ul>
+        <div id="fbtns">
+        	<a id="btn_chgpwd" class="mybutton">修改密码</a>
+        </div>
+    </div>
+</body>
+</html>

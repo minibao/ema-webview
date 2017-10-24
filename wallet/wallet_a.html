@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>钱包余额</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+
+</head>
+
+<body>
+	<div id="page">
+        <ul	class="menulist">
+        	<li> <a href="javascript:;">帐号： <span class="leftinfo">214432251 </span></a></li>
+            <li class="b_none"> <a href="javascript:;" >马币余额： <span class="leftinfo txt-col1">100 </span> 个</a></li>
+            <li class="b_none"> <a href="javascript:;" >金砖余额： <span class="leftinfo txt-col1">100 </span>个<i class="tb_pullright"><img src="../img/tbs4.png" class="b_arrow"></i></a></li>
+        </ul>
+         <ul	class="menulist">
+        	<li>
+        		<a href="javascript:;"><span class="leftinfo txt-col1">亿马币兑换 </span><i class="tb_pullright"><img src="../img/tbs2.png"></i></a>
+				<div class="show_info" style="display: none">
+					<div><span>兑换金额：</span><span><input type="text" id="amt_1" placeholder="输入兑换金额"/> 马币</span></div>
+					<div><span>需要消耗：</span><span><i id="amt_1_txt">10</i> 金砖（10金砖=1马币）</span></div>
+					<div><a href="javascript:void(0)" class="mybutton" style="color:#fff;width:auto;padding-left:0">确认兑换</a></div>
+				</div>        		
+        	</li>
+         	<li>
+         		<a href="javascript:;"><span class="leftinfo txt-col1">微信红包兑换 </span><i class="tb_pullright"><img src="../img/tbs2.png"></i></a>
+         		<div class="show_info" style="display: none">
+					<div class="red_pk">
+						<div>请选择需要兑换的红包金额</div>
+						<table >
+							<tbody>
+							<tr>
+								<td data-val ="1" >1元</td>
+								<td data-val ="2">2元</td>
+								<td data-val ="5">5元</td>
+							</tr>
+							<tr>
+								<td data-val ="10">10元</td>
+								<td data-val ="50">50元</td>
+								<td data-val ="100">100元</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div><span>需要消耗：</span><span><i>10</i> 金砖</span></div>
+					<div><span>请关注官方微信公众号：*******，回复生成的兑换码，即可领取红包。</span></div>
+					<div><a href="javascript:void(0)" class="mybutton" style="color:#fff;width:auto;padding-left:0">确认兑换</a></div>
+				</div>    
+         	</li>
+        </ul>
+        <ul	class="menulist">
+        	<li class="txt-li"><span>请至官网<a href="https://www.lemonade-game.com" class="leftinfo txt-col1">www.lemonade-game.com</a>查看更多</span></li>
+        </ul>
+    </div>
+<script>
+$(document).ready(function(){
+	
+	$(".menulist").delegate("li a", "click", function(){
+   		 $(this).siblings(".show_info").toggle();
+   		 var disp = $(this).siblings(".show_info").css("display");
+   		 if(disp == "block")
+   		 {
+   		 	$(this).find(".tb_pullright").html("<img src='../img/tbs4.png' class='b_arrow' />");
+   		 }
+   		 else
+   		 {
+   		 	$(this).find(".tb_pullright").html("<img src='../img/tbs2.png' />");
+   		 }
+	});
+	$("#amt_1").keyup(function(){
+			var amt_c = $(this).val();
+			if(amt_c >10000)
+			{
+				amt_c = 10000;
+				layer.msg("输入的金额大于10000");
+				$(this).val(10000);
+			}
+			if(amt_c < 0)
+			{
+				amt_c = 0;
+				layer.msg("输入的金额不能小于1");
+				$(this).val(0);
+			}
+			$("#amt_1_txt").html(amt_c*10);
+	});
+	
+	$(".red_pk table").delegate("td", "click", function(){
+			$(".red_pk table td").each(function(i){
+					$(this).removeClass("current");
+			 });
+			$(this).addClass("current");
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<meta name="format-detection" content="address=no"/>
+		<title>实名认证</title>
+		<link rel="stylesheet" type="text/css" href="css/all_style.css"/>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/layer/layer.js"></script>
+				<script type="text/javascript" src="js/api_func.js"></script>
+	</head>
+	<body>
+		 <div class="top_bar">
+		 	<a href="my_info_list.html" class="back_icon">
+		 		<img src="images/back.png" />
+		 	</a>
+		 	<div class="title_1">实名认证</div>
+
+		 </div>
+		 <div class="main_list">
+		 	
+				<div  class="inp-box-1">
+							
+							<div class="bg_white i-b-1 b-bottom">
+									<input type="text" name="truename" id="truename"  placeholder="请输入真实姓名"/>
+							</div>
+							<div class="bg_white i-b-1">
+									<input type="text" name="idcard" id="idcard"  placeholder="身份证号（仅支持大陆身份证）"/>
+							</div>
+							
+							<a href="javascript:void(0)" class="btn_orange">确认并提交</a>
+							<div class="alert-m-1">您的身份将收到亿马联盟严格保护</div>
+				</div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function(){
+					 isTgUser();
+					 $.ajax({
+					            url:http_url+"tg/user/getinfo",
+					            type:"get",
+					            dataType:"jsonp",
+					            error: function(){layer.msg("请求失败！");},
+					            success: function(data){
+					                if(data.errno==1000)
+					                {
+					                    layer.msg("您还未登录！",function(){
+					                   	 	 location.href="login.html";
+					                   	 });
+					                }
+					                else
+					                {
+					                    if(data.errno==0 )
+					                    {
+					       					if(data.status.cert_id==6){
+					             						$("#truename").val(data.info.realname);
+					             						$("#truename").attr("disabled","disabled");
+					             						$("#idcard").val(data.info.cert_id);
+					             						$("#idcard").attr("disabled","disabled");
+					             						$(".btn_orange").remove();
+					             			}
+					                    }
+					                }
+			                }
+			      });	
+			      $(".btn_orange").click(function(){
+			      	var  realname = $("#truename").val();
+			      	 var  cert_id = $("#idcard").val();
+			      		true_name_auth(realname,cert_id);
+			      }); 
+			  
+		});
+		
+</script>
+	</body>
+</html>

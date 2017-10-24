@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>个人帐户</title>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script src="js/public.js"></script>
+
+</head>
+
+<body>
+	<div id="page">
+    	<div id="uerinfo">
+        	<i class="userhead"><img src="img/tbs60.png"></i>
+            <p id="nickname"></p>
+            <p id="useraccount"></p>
+        </div>
+        <ul	class="menulist">
+        	<li>
+				<a  id = "modifypwd" href="modifypwd.html">
+					<i class="icoin"><img src="img/tbs15.png" alt="" /></i>
+					修改密码 
+					<i class="tb_pullright"><img src="img/tbs2.png"></i>
+				</a>
+			</li>
+            <li><a id = "bindphone"><i class="icoin"><img src="img/tbs16.png" alt="" /></i> 手机绑定 <span class="rightinfo" id="isbind">未绑定</span> <i class="tb_pullright"><img src="img/tbs2.png"></i></a></li>
+        </ul>
+        <ul	class="menulist">
+			<!-- href="wallet/wallet_a.html"-->
+        	<li><a id = "wallet"><i class="icoin"><img src="img/tbs17.png" alt="" /></i> 钱包余额 <span class="rightinfo"> </span>  <i class="tb_pullright"><img src="img/tbs2.png"></i></a></li>
+            <!-- <li><a href="#"><i class="icoin"><img src="img/tbs18.png" alt="" /></i> 游戏优惠券 <span class="rightinfo">1张</span> <i class="icoin tb_pullright"></i></a></li>-->
+            <!-- href="libao/libaolist.html"-->
+            <li><a  id="list_libao"><i class="icoin"><img src="img/tbs67.png" alt="" /></i> 礼包列表 <i class="tb_pullright"><img src="img/tbs2.png"></i></a></li>
+            <li><a href="javascript:;" id="list_pay"><i class="icoin"><img src="img/tbs19.png" alt="" /></i> 充值记录 <i class="tb_pullright"><img src="img/tbs2.png"></i></a></li>
+        </ul>
+        <!-- <ul	class="menulist">
+        	<li><a href="#"><i class="icoin"><img src="img/tbs20.png" alt="" /></i> 自动登录游戏</a></li>
+        </ul>
+        <p id="ftip">关闭后每次进入游戏时可重新选择帐号进行登录</p>
+        <div id="fbtns">
+            <a href="http://passport.lemonade-game.com/login/logout" class="mybutton">退出当前帐号</a>
+        </div> -->
+    </div>
+<script>
+$(document).ready(function(){
+	setCookie("isbind","0")
+    var deviceType=getCookie("deviceType");
+    var nkname=getCookie("nickname");
+    var deviceKey=getCookie("deviceKey");
+    var uuid=getCookie("uid");
+    var token=getCookie("token");
+	var accountType=getCookie("accountType");
+	var isbind=getCookie("isbind");
+    //alert("isbind="+isbind+";accountType="+accountType+";deviceType="+deviceType+";deviceKey="+deviceKey+";nickname="+nkname+";uid="+uuid+";token="+token)
+	//alert("uid="+uuid)
+    $("#list_pay").click(function(){
+    	layer.msg("暂未开放！");
+    	return false;
+    });
+	$("#wallet").click(function(){
+    	layer.msg("暂未开放！");
+    	return false;
+    });
+	$("#list_libao").click(function(){
+    	layer.msg("暂未开放！");
+    	return false;
+    });
+	
+	
+	$.ajax({
+        url:"https://"+localurl+"/ema-platform/member/ifbind",
+        type:"post",
+        dataType:"json",
+		data:{
+				uid:uuid,
+			},
+        error: function(e){layer.msg("绑定状态请求失败！")},
+        success: function(data){
+			var a = data.data.length;
+			if(a != null)
+            {$("#isbind").html(data.data);
+			setCookie("isbind","1")
+			}
+           else
+            {$("#isbind").html("未绑定");
+			setCookie("isbind","0")}
+        }
+    });
+	
+	
+	$("#bindphone").click(function(){			
+		var isbind=getCookie("isbind");
+        isbind="1";
+		if(isbind == "1"){
+            alert();
+			// layer.msg("已绑定手机用户暂时不支持修改绑定手机");
+            window.location.href="https://"+localurl+"/wap/bindphone.html?isbind=1";
+		}else{
+			window.location.href="https://"+localurl+"/wap/bindphone.html";
+		}
+	});
+	
+	/*
+	$("#modifypwd").click(function(){	
+		accountType = "0"; //getCookie("accountType");
+		if(accountType=="0"){
+			layer.msg("一键登录用户不支持修改密码，请绑定手机后修改");
+		}else{
+			window.location.href="https://"+localurl+"/wap/modifypwd.html";
+		}
+	});
+    
+    setCookie("loginname",uname);
+    setCookie("nickname",nkname);
+    setCookie("sid",sid);
+    setCookie("uuid",uuid);
+    setTimeout(function(){
+        alert("loginname:"+uname+";nickname:"+nkname+";sid:"+sid+";uuid:"+uuid);
+    },1000);
+    */
+    
+    if(nkname)
+    {
+        $("#nickname").html(nkname);
+    }
+    else
+    {
+        $("#nickname").html("玩家"+nkname+" <img src='img/48.png' id='btn_modify' >");
+    }
+    /* var load1=layer.load(1);
+    $.ajax({
+        url:"https://passport."+weburl+"/account",
+        type:"get",
+        dataType:"jsonp",
+        error: function(){layer.msg("请求失败！")},
+        success: function(data){
+            if(data.retcode==1000)
+            {
+                layer.msg("您还未登录！");
+            }
+            else
+            {
+                if(data.nickname)
+                {
+                    $("#nickname").html(data.nickname);
+                }
+                else
+                {
+                    $("#nickname").html("玩家"+uname+" <img src='img/48.png' id='btn_modify' >");
+                }
+            }
+            layer.close(load1);
+        }
+    });
+    
+
+    $("#btn_modify").live("click",function(){
+        if($("#txt_nickname").length==0)
+        {
+            if(nkname)
+            {
+                $(this).parent().html("<input type='text' value="+nkname+" id='txt_nickname'><span class='smllbtn' id='btn_modnkname'>确定</span>");
+            }
+            else if(uname)
+            {
+                $(this).parent().html("<input type='text' value="+uname+" id='txt_nickname'><span class='smllbtn' id='btn_modnkname'>确定</span>");
+            }
+        }
+    });
+
+    $("#btn_modnkname").live("click",function(){
+        var nickname=$.trim($("#txt_nickname").val());
+        var load=layer.load(1);
+        //alert(nickname);
+        if(nickname=="")
+        {
+            layer.close(load);
+            return false;
+        }
+        $.ajax({
+            url:"https://passport."+weburl+"/account/change_nickname?nickname="+encodeURIComponent(nickname),
+            type:"get",
+            dataType:"jsonp",
+            error: function(){layer.msg("请求失败！")},
+            success: function(data){
+                if(data.retcode==1000)
+                {
+                    layer.msg("您还未登录！");
+                }
+                else
+                {
+                    if(data.is_true==false)
+                    {
+                        layer.msg(data.retmsg,{time:2000},function(){
+                            window.location.reload();
+                        });
+                    }
+                    else
+                    {
+                        layer.msg("昵称修改成功！",function(){
+                            window.location.reload();
+                        });
+                    }
+                }
+                layer.close(load);
+            }
+        });
+    }); */
+});
+</script>
+</body>
+</html>

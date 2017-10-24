@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>忘记密码</title>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript" src="js/findpwd.js"></script>
+<script>
+$(document).ready(function(){
+});
+</script>
+</head>
+
+<body>
+	<div id="page">
+        <div id="fpwd_step1">
+        	<p style="padding:0.6rem;font-size:1.4em;line-height:200%;">请输入需要找回的帐号：</p>
+            <ul	class="menulist" style="margin-top:0;">
+                <li><span class="lineform"><b>帐号：</b> <span id="showQQ" class="detailinfo"><input type="text" placeholder="请输入手机号" id="txt_account" /></span></span></li>
+            </ul>
+            <div id="fbtns">
+            	<a id="btn_forgetpwdnext" class="mybutton">获取密码</a>
+            </div>
+        </div>
+        <!-- <div id="fpwd_step_none" style="display:none;">
+            <div class="tips">
+                <p>您尚未进行任何绑定，请求助客服，QQ：1468408425</p>
+            </div>
+        </div>
+        <div id="fpwd_step2" style="display:none;">
+            <p style="padding:0.6rem;font-size:1.4em;line-height:200%;">此帐号已绑定手机：<span id="userbindphone"></span></p>
+            <ul class="menulist" style="margin-top:0;">
+                <li><span class="lineform"><b>验证码：</b> <span id="showQQ" class="detailinfo"><input type="text" placeholder="请填写验证码" id="phoneyzm" />
+                <em id="getmsgyzm" class="btn_dxyzm">免费验证</em> </span></span></li>
+            </ul>
+            <div id="fbtns">
+                <a id="btn_forgetpwdnext2" class="mybutton">下一步</a>
+            </div>
+        </div>
+        <div id="fpwd_step3" style="display:none;">
+            <input type="hidden" id="phonetoken" />
+            <ul class="menulist" style="margin-top:0;">
+                <li><span class="lineform"><b>新密码：</b> <span id="showQQ" class="detailinfo"><input type="password" placeholder="请输入新密码" id="txt_fpwd" /></span></span></li>
+            </ul>
+            <div id="fbtns">
+                <a id="btn_forgetpwdnext3" class="mybutton">提交</a>
+            </div>
+        </div>
+       <div id="fpwd_step4" style="display:none;">
+            <div class="tips">
+                <p>密码重置成功，点击右上角返回游戏。</p>
+            </div>
+        </div> -->
+    </div>
+</body>
+</html>

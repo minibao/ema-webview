@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>礼包列表</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/bindphone.js"></script>
+<script>
+	$(document).ready(function(){
+		var load=layer.load(1);
+		$.ajax({
+            url:"https://passport."+weburl+"/gift/my",
+            type:"get",
+            dataType:"jsonp",
+            error: function(){layer.msg("请求失败！")},
+            success: function(data){
+            	if(data.retcode==0)
+            	{
+            		var mygift="";
+            		if(data.code_data.length==0)
+            		{
+            			$("#giftlist").html('<div class="lb_recommard">您还未领取任何礼包！</div>');
+            		}
+            		else
+            		{
+	            		$.each(data.code_data,function(i,v){
+	            			mygift+='<div class="lb_recommard clearfix">';
+							mygift+='<div class="leftimg">';
+							mygift+='<img src="https://static.lemonade-game.com/'+data.code_data[i].pic+'">';
+							mygift+='</div>';
+							mygift+='<div class="recomgameinfo">';
+							mygift+='<p class="gamename"><a href="https://wap.'+weburl+'/libao/libaodetail.html?gid='+data.code_data[i].gid+'">'+data.code_data[i].name+'</a><i class="tb_pullright"><a href="https://wap.'+weburl+'/libao/libaodetail.html?gid='+data.code_data[i].gid+'"><img src="../img/tbs2.png"></a></i></p>';
+							mygift+='<p class="gameinfo">使用期限：<font color="#ff7111">'+data.code_data[i].start_ts+'</font> 至 <font color="#ff7111">'+data.code_data[i].end_ts+'</font></p>';
+							mygift+='</div>';
+							mygift+='<div class="copyjhm"><div class="copyform"><span class="txt_copy"><span style="color:#666">激活码：</span>'+data.code_data[i].code+'</span></div></div>';
+							mygift+='</div>';
+	            		});
+	            		$("#giftlist").html(mygift);
+            		}
+            	}
+            	layer.close(load);
+            }
+        });
+		$("#yuding").click(function(){
+			layer.msg("暂未开放！")
+		});
+	})
+</script>
+</head>
+
+<body>
+	<div id="page">
+		<div class="tabmenu clearfix">
+			<a class="left50" href="libaolist.html">礼包列表</a>
+			<a class="left50 onmenu" href="lingqu.html">我的礼包</a>
+		</div>
+		<div class="tabmenu1 clearfix" style="margin-top:1.5em;">
+			<a class="left50 onmenu" href="lingqu.html" style="border-right:1px solid #ccc;">我领取的号</a>
+			<a class="left50" href="javascript:;" id="yuding">我预定的号</a>
+		</div>
+		<div id="giftlist">
+		
+		</div>
+        <a href="#" class="lb_more">查看所有礼包</a>
+    </div>
+</body>
+</html>

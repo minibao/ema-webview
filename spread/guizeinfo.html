@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="address=no" />
+    <title>推广游戏流程</title>
+    <link rel="stylesheet" type="text/css" href="css/all_style.css" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/api_func.js"></script>
+    <script type="text/javascript" src="js/api_func_2.js"></script>
+</head>
+<style type="text/css">
+.unactive {
+    background: #6d6d6d!important;
+}
+
+.dengji {
+    padding: 0.8rem 0 0.8rem 1rem;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.gz-box {
+    
+    font-size: 1rem;
+}
+
+.mg-lf {
+    margin-left: 1em;
+
+}
+
+.bg-cl {
+    background: #ff610f;
+    color: #fff;
+}
+.gz-box:nth-child(odd){
+    background: #f3f3f3;
+}
+</style>
+
+<body>
+    <div class="top_bar">
+        <a href="my_info.html" class="als_icon">
+            <img src="images/avtar.png" />
+        </a>
+        <div class="title_1">推广规则</div>
+        <a href="javascript:void(0)" class="list_icon">
+            <img src="images/option.png" />
+        </a>
+    </div>
+    <div class="main_list">
+        <p class="title_3 bg_white">亿马推广游戏规则</p>
+        <div class="bg_white lc_img guizeinfoshow">
+        </div>
+        <a href="d_spend2.html" style="width:100%;padding:10px 0;background:#ff610f;display: block;color:#fff;text-align:center;">返回首页</a>
+    </div>
+    <script type="text/javascript">
+    var appid = getUrlParam("appid");
+    var appname = getUrlParam("name");
+    promoter(appid);
+    $(".title_3.bg_white").html(appname + "推广规则");
+    </script>
+</body>
+
+</html>

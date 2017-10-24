@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="address=no" />
+    <title>推广游戏列表</title>
+    <link rel="stylesheet" type="text/css" href="css/all_style.css" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/api_func.js"></script>
+    <script type="text/javascript" src="js/api_func_2.js"></script>
+</head>
+<style type="text/css">
+.two-btn {
+    width: 6em;
+    float: right;
+    text-align: center;
+    font-size: 1.3em;
+    margin-right: 1.3em;
+}
+.two-btn div{
+	padding: 0.3em;
+	color:#fff;
+	background:#FF610F; 
+	margin-bottom:0.5em;
+}
+.two-btn a{
+
+	color:#fff;
+
+}
+.main_list ul li span.info, .main_list ul li span.info1{
+	width: 45%;
+}
+</style>
+
+<body>
+    <div class="top_bar">
+        <a href="d_spend2.html" class="back_icon">
+            <img src="images/back.png" />
+        </a>
+        <div class="title_1">我的推广</div>
+        <a href="javascript:void(0)" class="list_icon">
+            <img src="images/option.png" />
+        </a>
+    </div>
+    <div class="main_list">
+        <ul id="tg_list">
+        </ul>
+        <div class="menu_list" style="display: none">
+            <em class="m_arrow">
+			</em>
+            <ul>
+                <li>
+                    <a href="d_spend2.html"><img src="images/i_ico_1.png" class="ico_s" /><span class="txt">首页</span></a>
+                </li>
+                <li>
+                    <a href="my_spread.html"><img src="images/i_ico_2.png" class="ico_s" /><span class="txt">我的推广</span></a>
+                </li>
+                <li>
+                    <a href="my_ach.html"><img src="images/i_ico_3.png" class="ico_s" /><span class="txt">我的业绩</span></a>
+                </li>
+                <li>
+                    <a href="my_player_list.html"><img src="images/i_ico_4.png" class="ico_s" /><span class="txt">我的玩家</span></a>
+                </li>
+                <li>
+                    <a href="my_info.html"><img src="images/i_ico_5.png" class="ico_s" /><span class="txt">个人信息</span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="loginout"><img src="images/i_ico_6.png" class="ico_s" /><span class="txt">退出登陆</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        get_my_spread_new("tg_list");
+    });
+    </script>
+</body>
+
+</html>

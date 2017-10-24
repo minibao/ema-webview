@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<meta name="format-detection" content="address=no"/>
+		<title>今日消费</title>
+		<link rel="stylesheet" type="text/css" href="css/all_style.css"/>
+		<link rel="stylesheet" type="text/css" href="slides/css/swiper.min.css"/>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/layer/layer.js"></script>
+		<script type="text/javascript" src="slides/js/swiper.min.js"></script>
+		<script type="text/javascript" src="js/api_func.js"></script>
+	</head>
+	<body>
+		 <div class="top_bar">
+		 	<a href="my_info.html" class="als_icon">
+		 		<img src="images/avtar.png" />
+		 	</a>
+		 	<div class="title_1">亿马推广员</div>
+		 	<a href="javascript:void(0)" class="list_icon">
+		 		<img src="images/option.png" />
+		 	</a>
+		 </div>
+		 <div class="main_list">
+		 			<div class="content-1">
+		 					 <div class="ct-1'">
+		 					 	 <p class="c1-p-1">今日收益  (元)</p>
+		 					 	 <p class="c1-p-2" id="day_pay">0</p>
+		 					 </div>
+		 				<div class="ct-2">
+		 					 <div class="ct-2-1 b_r_line">
+		 					 	  <p>当月收益</p>
+		 					 	  <p class="p-l-10" id="month_pay">0</p>
+		 					 </div>
+		 					  <div class="ct-2-1 ml10 ">
+		 					 	  <p>历史收益</p>
+		 					 	  <p class="p-l-10" id="total_pay">0</p>
+		 					 </div>
+		 				</div>	 
+		 				<a href="d_person.html"  class="tab-icon"><img src="images/tab-icon.png"/></a>
+		 			</div>
+		 			<div class="a-list bg_white">
+		 				<a href="index.html" class="bg_white">
+		 					 <img src="images/ico_1.png" />
+		 					  <i>游戏推广</i>
+		 				</a>
+		 				<a href="my_spread.html" class="bg_white">
+		 					 <img src="images/ico_2.png" />
+		 					  <i>我的推广</i>
+		 				</a>
+		 				<a href="my_ach.html" class="bg_white">
+		 					  <img src="images/ico_3.png" />
+		 					  <i>我的业绩</i>
+		 				</a>
+		 				<a href="my_player_list.html?title=我的玩家" class="bg_white none">
+		 					 <img src="images/ico_4.png" />
+		 					  <i>我的玩家</i>
+		 				</a>
+		 			</div>
+		 		<!--	<div class="bg_white ad_banner swiper-container">
+		
+		 		</div>-->
+		 			<div class="bg_white sp-a-1">
+		 				 <a href="liucheng.html">点击查看推广流程</a>
+		 			</div>
+		 			
+		 <div class="menu_list" style="display: none">
+			<em class="m_arrow">
+			</em>
+			<ul>
+				<li><a href="d_spend2.html"><img src="images/i_ico_1.png" class="ico_s" /><span class="txt">首页</span></a></li>
+				<li><a href="my_spread.html"><img src="images/i_ico_2.png" class="ico_s" /><span class="txt">我的推广</span></a></li>
+				<li><a href="my_ach.html"><img src="images/i_ico_3.png" class="ico_s" /><span class="txt">我的业绩</span></a></li>
+				<li><a href="my_player_list.html"><img src="images/i_ico_4.png" class="ico_s" /><span class="txt">我的玩家</span></a></li>
+				<li><a href="my_info.html"><img src="images/i_ico_5.png" class="ico_s" /><span class="txt">个人信息</span></a></li>
+				<li><a href="javascript:void(0)" class="loginout"><img src="images/i_ico_6.png" class="ico_s" /><span class="txt">退出登陆</span></a></li>
+			</ul>
+		</div>		
+		 </div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			get_data_total("pay","day_pay","month_pay","total_pay");
+			//get_ad_list();
+		});
+		
+</script>		
+
+	</body>
+</html>

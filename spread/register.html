@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+		<meta name="format-detection" content="telephone=no"/>
+		<meta name="format-detection" content="address=no"/>
+		<title>亿马推广注册</title>
+		<link rel="stylesheet" type="text/css" href="css/all_style.css"/>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/layer/layer.js"></script>
+		<script type="text/javascript" src="js/api_func.js"></script>
+	</head>
+	<body>
+		 <div class="top_bar">
+		 	<a href="javascript:history.go(-1)" class="back_icon">
+		 		<img src="images/back.png" />
+		 	</a>
+		 	<div class="title_1">亿马注册</div>
+		 	<a href="javascript:void(0)" class="list_icon">
+		 	</a>
+		 </div>
+		 <div class="main_list">
+		  		<div class="l_t_txt">
+		  			<div class="l_t_b">
+		  				<span class="logo"><img src="images/l_icon_1.png"/></span>
+		  					<span class="txt_title"><i style="color:#ff7111">亿马</i>推广员</span>
+		  			</div>
+		  		</div>	
+         		<div class="l_l_box bg_white">
+         			<div class="i_p_txt b-bottom">
+         				<span class="l_icon">
+         					<img src="images/l_icon_2.png"/>
+         				</span>
+         				<span class="l_txt_i">
+         					<input type="text" name="username"  id="user" placeholder="请输入注册帐号" autocomplete="off"/>
+         				</span>
+         			</div>
+         			
+         			   			<div class="i_p_txt b-bottom">
+         				<span class="l_icon">
+         					<img src="images/l_icon_3.png"/>
+         				</span>
+         				<span class="l_txt_i">
+         					<input type="password" name="passwd"  id="passwd" placeholder="请输入帐号密码"/>
+         				</span>
+         			</div>
+         			<div class="i_p_txt ">
+         				<span class="l_icon">
+         					<img src="images/l_icon_3.png"/>
+         				</span>
+         				<span class="l_txt_i">
+         					<input type="password" name="passwd"  id="passwd2" placeholder="请再次输入密码"/>
+         				</span>
+         			</div>
+         		</div>
+   
+         		<div class="btn_submit">
+         				<a class="submit" href="javascript:void(0)">注册</a>
+         		</div>
+         		<div class="l_l_box_1">
+         		<span class="l_l_a_3">我已经同意<a href="agreement.html" class="ft4">柠檬水用户协议</a></span> 
+         		</div>
+
+		 </div>
+<script type="text/javascript">
+		$(document).ready(function(){
+			$(".submit").click(function(){
+				var user = $("#user").val();
+				var passwd = $("#passwd").val();
+				var passwd2 = $("#passwd2").val();
+				$.ajax({
+						url:http_url+"register/check_loginname?loginname="+user,
+						type:"get",
+						dataType:"jsonp",
+						error: function(){layer.msg("请求失败！");},
+						success: function(data){
+								if(data.is_true!=2){
+										  layer.msg(data.retmsg,{time:2000});
+										  $("#user").val('');
+										  $("#passwd").val('');
+										  $("#passwd2").val('');
+										  return false;
+								}else{
+										register(user,passwd,passwd2);
+										return false;
+								}
+						}
+			 });	
+			
+			});
+		});
+</script>
+	</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>帮助中心</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script>
+$(document).ready(function(){
+	var appid=getCookie("appid");
+	if(!appid)
+	{
+		layer.msg("appid获取失败");
+	}
+	getservername(appid);
+	$("#qstypelist li").click(function(){
+		$(this).addClass("ischecked").siblings().removeClass("ischecked");
+		$(this).children().children("img").attr("src","../img/tbs8.png");
+		$(this).siblings().children().children("img").attr("src","../img/tbs7.png");
+	});
+
+	$("#btn_submitqustion").click(function(){
+		var qtype=$("#qstypelist li").index($("#qstypelist .ischecked"))+1;
+		var selctserver=$("#txt_selctserver").val();
+		var rolename=$("#txt_rolename").val();
+		var questitle=$("#txt_questitle").val();
+		var quesct=$("#txt_quesct").val();
+		var mobile=$("#txt_mobile").val();
+		var mail=$("#txt_mail").val();
+		var load=layer.load(1);
+		if(qtype<0)
+		{
+			layer.msg("请选择反馈类型");
+			layer.close(load);
+			return false;
+		}
+		if(!selctserver)
+		{
+			selctserver="";
+		}
+		if(!rolename)
+		{
+			layer.msg("请填写角色名称");
+			layer.close(load);
+			return false;
+		}
+		if(!questitle)
+		{
+			layer.msg("请填写问题标题");
+			layer.close(load);
+			return false;
+		}
+		if(!quesct)
+		{
+			layer.msg("请填写问题内容");
+			layer.close(load);
+			return false;
+		}
+		if(!mobile)
+		{
+			layer.msg("请填写联系电话");
+			layer.close(load);
+			return false;
+		}
+		$.ajax({
+			url:"https://passport."+weburl+"/cs/askadd?game_id="+appid+"&partition_id="+selctserver+"&role_name="+rolename+"&title="+questitle+"&content="+quesct+"&tel="+mobile+"&email="+mail+"&type="+qtype,
+			type:"POST",
+			dataType:"jsonp",
+			error: function(){layer.msg("请求失败")},
+			success: function(data){
+				if(data.retcode==0)
+				{
+					layer.close(load);
+					layer.msg("问题提交成功！",{time:1000},function(){
+						window.location.href="https://wap."+weburl+"/help/myquestion.html";
+					});
+				}
+			}
+		});
+	});
+});
+
+function getservername(app_id)
+{
+	var load=layer.load(1);
+	$.ajax({
+		url:"https://passport."+weburl+"/cs/gameserver?app_id="+app_id,
+		type:"POST",
+		dataType:"jsonp",
+		error: function(){layer.msg("请求失败")},
+		success: function(data){
+			layer.close(load);
+			if(data.retcode==0)
+			{
+				var games="";
+				$.each(data.data,function(i,v){
+					games+="<option value="+data.data[i].partition_id+">"+data.data[i].partition_name+"</option>"
+				});
+                if(data.data.length == 0)
+                {
+                    $("#txt_selctserver").attr('disabled','disabled');
+                    $("#txt_selctserver option").remove(); 
+                }
+                else
+                {
+                    $("#txt_selctserver").removeAttr('disabled','');
+                    $("#txt_selctserver").html(games);
+                }
+			}
+			if(data.retcode==1000)
+			{
+				delCookie("longinname");
+				layer.msg("请先登录！");
+				return false;
+			}
+		}
+	});
+}
+</script>
+</head>
+
+<body>
+	<div id="page">
+		<div class="tabmenu clearfix">
+			<a class="left33" href="index.html">问题类型</a>
+			<a class="left33 onmenu" href="quiz.html">我要提问</a>
+			<a class="left33" href="myquestion.html">我的问题</a>
+		</div>
+		<div class="lb_recommard">
+			<p class="helptitle" style="border-bottom:1px solid #ccc"><font color="#ff7111">*</font> 反馈类型</p>
+			<div class="helpblock">
+				<ul id="qstypelist" class="clearfix">
+					<li typeval="1"><span class="cusradio"><img src="../img/tbs7.png" /></span> 游戏问题</li>
+					<li typeval="2"><span class="cusradio"><img src="../img/tbs7.png" /></span> 充值问题</li>
+					<li typeval="3"><span class="cusradio"><img src="../img/tbs7.png" /></span> 帐号问题</li>
+					<li typeval="4"><span class="cusradio"><img src="../img/tbs7.png" /></span> 礼包问题</li>
+				</ul>
+	        </div>
+			<p class="helptitle">所在服务器</p>
+			<div class="helpblock">
+				<select id="txt_selctserver" style="width:100%;height:2.4rem;border:1px solid #ccc;"></select>
+	        </div>
+			<p class="helptitle"><font color="#ff7111">*</font> 角色名称</p>
+			<div class="helpblock">
+				<div class="txt_helper" >
+					<input type="text" placeholder="请输入您的角色名称" id="txt_rolename" />
+				</div>
+	        </div>
+			<p class="helptitle"><font color="#ff7111">*</font> 问题标题</p>
+			<div class="helpblock">
+				<div class="txt_helper" >
+					<input type="text" placeholder="请输入问题标题(30字以内)" id="txt_questitle" />
+				</div>
+	        </div>
+			<p class="helptitle"><font color="#ff7111">*</font> 内容</p>
+			<div class="helpblock">
+				<textarea style="width:100%;height:10rem;border:1px solid #ccc" placeholder="请输入意见及内容(200字以内)" id="txt_quesct"></textarea>
+	        </div>
+			<p class="helptitle"><font color="#ff7111">*</font> 联系电话</p>
+			<div class="helpblock">
+				<div class="txt_helper" >
+					<input type="text" placeholder="请输入电话，可以方便联系您解决问题" id="txt_mobile" />
+				</div>
+	        </div>
+			<p class="helptitle">电子邮件</p>
+			<div class="helpblock">
+				<div class="txt_helper" >
+					<input type="text" placeholder="请输入邮箱，可以方便联系您解决问题" id="txt_mail" />
+				</div>
+	        </div>
+	        <div id="fbtns">
+	        	<a id="btn_submitqustion" class="mybutton">提交</a>
+	        </div>
+		</div>
+    </div>
+</body>
+</html>

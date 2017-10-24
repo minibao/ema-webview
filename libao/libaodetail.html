@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>礼包列表</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+</head>
+
+<body>
+	<div id="page">
+		<div class="tabmenu clearfix">
+			<a class="left50 onmenu" href="libaolist.html">礼包列表</a>
+			<a class="left50" href="lingqu.html">我的礼包</a>
+		</div>
+		<div class="lb_recommard clearfix">
+			<div class="leftimg">
+				<img src="" id="gift_icoin" >
+			</div>
+			<div class="recomgameinfo">
+				<p class="gamename" id="giftname"></p>
+				<p class="gameinfo">剩余情况：<font color="#ff7111" id="gift_sy"></font></p>
+			</div>
+			<div style="margin-top:20px"><a href="javascript:;" class="mybutton" id="get_mygift">领取</a></div>
+		</div>
+        <div class="lb_recommard">
+        	<div class="title1"><span>礼包内容</span></div>
+        	<div class="lb_content">
+        		<p id="gift_content"></p>
+        		<p>使用期限：<font color="#ff7111" id="stime"></font> 至 <font color="#ff7111" id="etime"></font></p>
+        	</div>
+        	<div class="title1" style="border-top:0.1rem solid #ccc;padding-top:1rem;margin-top:1rem;"><span>使用方法</span></div>
+        	<div class="lb_content">
+        		<p id="usemathed"></p>
+        	</div>
+        </div>
+        <a href="libaolist.html" class="lb_more">查看所有礼包</a>
+    </div>
+</body>
+
+<script>
+	$(document).ready(function(){
+		var gid=getUrlParam("gid");
+		var load=layer.load(1);
+		$.ajax({
+            url:"https://passport."+weburl+"/gift/get_gift_info?gid="+gid,
+            type:"get",
+            dataType:"jsonp",
+            error: function(){layer.msg("请求失败！")},
+            success: function(data){
+            	layer.close(load);
+            	if(data.retcode==0)
+            	{
+            		if(data.data.istake==1)
+            		{
+            			$("#get_mygift").removeClass();
+            			$("#get_mygift").addClass("g_mybutton").html("已领取");
+            		}
+            		if(data.data.gift_info.num==data.data.use_num)
+            		{
+            			$("#get_mygift").addClass("g_mybutton").html("已领光");
+            		}
+	            	$("#gift_icoin").attr("src","https://static.lemonade-game.com/"+data.data.gift_info.pic);
+	            	var sy=(data.data.gift_info.num-data.data.use_num)/data.data.gift_info.num*100;
+	            	sy = Math.round(sy*100)/100;
+	            	$("#gift_sy").html(sy+"%");
+	            	$("#giftname").html(data.data.gift_info.name);
+	            	$("#gift_content").html(data.data.gift_info.content);
+	            	$("#usemathed").html(data.data.gift_info.desc);
+	            	$("#stime").html(data.data.gift_info.start_ts);
+	            	$("#etime").html(data.data.gift_info.end_ts);
+            	}
+            }
+        });
+
+        $("#get_mygift").click(function(){
+        	var load=layer.load(1);
+        	if(!$(this).hasClass("mybutton"))
+        	{
+        		layer.close(load);
+        	}
+        	else
+	        $.ajax({		
+	    		url:"https://passport."+weburl+"/gift/take_code",
+	    		type:"get",
+	    		data:"gift_id="+gid,
+	    		dataType:"jsonp",
+	    		contentType:"application/json; charset=UTF-8",
+	    		error:function(){
+	    			layer.msg("请求失败");
+	    		},
+	    		success:function(data){
+	    			layer.close(load);
+	                if(data.retcode == 0)
+	                {
+	                	layer.msg("恭喜您领取礼包成功！");
+	                	$("#get_mygift").after('<div class="copyjhm"><div class="copyform"><span class="txt_copy"><span style="color:#666">激活码：</span>'+data.code+'</span></div></div>');
+	                    $("#get_mygift").remove();
+	                }
+	                else if(data.retcode == 1000)
+	                {
+	                    layer.msg("您尚未登录平台，请进行登录操作！");
+	                }
+	                else if(data.retcode == 2065)
+	                {
+	                    layer.msg("你来晚了，激活码已经被抢光了！");
+	                }
+	                else if(data.retcode == 2071)
+	                {
+	                    layer.msg("已经领取过该礼包了！");
+	                }
+	                else
+	                {
+	                    layer.msg("出错了，稍后在来试试！");
+	                }
+	            }
+	        });
+        });
+	});
+
+	getUrlParam = function(name){
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+		var r = decodeURI(window.location.search).substr(1).match(reg);
+		return r!=null ? unescape(r[2]) : null;
+	}
+</script>
+</html>

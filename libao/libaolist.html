@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>礼包列表</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/bindphone.js"></script>
+<script>
+	var pagesize=10;
+	var lst=1;
+	var sch=1;
+	var pagecount=0;
+	var schcount=0;
+	$(document).ready(function(){
+	    var appid = getCookie("appid")?getCookie("appid"):10001;
+	    var kw="";
+	    if(!appid)
+	    {
+	    	layer.msg("appid获取失败");
+	    }
+	    if(appid)
+	    {
+		    loadgiftlist(appid,1);
+		}
+		$("#gamename").click(function(){
+			loadgiftlist(appid);
+		});
+		$("#btn_search").click(function(){
+			kw=$("#txt_keywords").val();
+			if(!kw)
+			{
+				layer.msg("请填写关键字！");
+				layer.close(load);
+			}
+			else
+			{
+				schgift(kw,appid,1);
+			}
+		});
+
+		$("#btn_morelb").live("click",function(){
+			if(lst>=pagecount)
+			{
+				$(this).html("没有更多礼包了");
+				return false;
+			}
+			lst++;
+			loadgiftlist2(appid,lst);
+		});
+
+		$("#btn_schmore").live("click",function(){
+			if(sch>=schcount)
+			{
+				$(this).html("没有更多礼包了");
+				return false;
+			}
+			sch++;
+			schgift2(kw,appid,sch);
+		});
+
+	});
+	
+	function schgift(kw,appid,page)
+	{
+
+		var load=layer.load(1);
+		$(".lb_more").attr("id","btn_schmore");
+		$.ajax({
+            url:"https://passport."+weburl+"/gift/search?kw="+kw+"&page="+page+"&pagesize="+pagesize+"&appid="+appid,
+            type:"get",
+            dataType:"jsonp",
+            error: function(){layer.msg("请求失败！")},
+            success: function(data){
+                if(data.retcode==0)
+                {
+                	schcount=Math.ceil(data.code_data.count/pagesize);
+                	var listhtml="";
+                	if(data.code_data.gift_list)
+                	{
+                        $.each(data.code_data.gift_list,function(i,v){
+                        	listhtml+='<li class="bt_libaolist"><a href="libaodetail.html?gid='+data.code_data.gift_list[i].gid+'" class="lineform">'+data.code_data.gift_list[i].name+'<i class="tb_pullright1"><img src="../img/tbs66.png"></i><i class="tb_pullright"><img src="../img/tbs2.png"></i></a></li>';
+                        });
+                	}
+                	else
+                	{
+                		listhtml='<li class="bt_libaolist"><a href="javascript:;" class="lineform">没有找到该礼包</a></li>';
+                	}
+                    $(".bt_libaolist").remove();
+                    $("#libaotitle").after(listhtml);
+                }
+            	layer.close(load);
+            }
+        });
+	}
+
+	function schgift2(kw,appid,page)
+	{
+
+		var load=layer.load(1);
+		$(".lb_more").attr("id","btn_schmore");
+		$.ajax({
+            url:"https://passport."+weburl+"/gift/search?kw="+kw+"&page="+page+"&pagesize="+pagesize+"&appid="+appid,
+            type:"get",
+            dataType:"jsonp",
+            error: function(){layer.msg("请求失败！")},
+            success: function(data){
+                if(data.retcode==0)
+                {
+                	var listhtml="";
+                	if(data.code_data.gift_list)
+                	{
+                        $.each(data.code_data.gift_list,function(i,v){
+                        	listhtml+='<li class="bt_libaolist"><a href="libaodetail.html?gid='+data.code_data.gift_list[i].gid+'" class="lineform">'+data.code_data.gift_list[i].name+'<i class="tb_pullright1"><img src="../img/tbs66.png"></i><i class="tb_pullright"><img src="../img/tbs2.png"></i></a></li>';
+                        });
+                	}
+                	else
+                	{
+                		listhtml='<li class="bt_libaolist"><a href="javascript:;" class="lineform">没有找到该礼包</a></li>';
+                	}
+                    $("#giftlist").append(listhtml);
+                }
+            	layer.close(load);
+            }
+        });
+	}
+
+	function loadgiftlist(appid,page)
+	{
+
+		$(".lb_more").attr("id","btn_morelb");
+		var load=layer.load(1);
+		$.ajax({
+            url:"https://passport."+weburl+"/gift/get_gift_appid?appid="+appid+"&page="+page+"&pagesize="+pagesize,
+            type:"get",
+            dataType:"jsonp",
+            error: function(){layer.msg("请求失败！");},
+            success: function(data){
+                if(data.count>0)
+                {
+                	pagecount=Math.ceil(data.count/pagesize);
+                	var listhtml="";
+                    $.each(data.gift_list,function(i,v){
+                    	listhtml+='<li class="bt_libaolist"><a href="libaodetail.html?gid='+data.gift_list[i].gid+'" class="lineform">'+data.gift_list[i].name+'<i class="tb_pullright1"><img src="../img/tbs66.png"></i><i class="tb_pullright"><img src="../img/tbs2.png"></i></a></li>';
+                    });
+                    $(".bt_libaolist").remove();
+                    $("#libaotitle").after(listhtml);
+               		 $("#gameico").attr("src",data.app_info.app_icon_2);
+                	$("#gamename").html(data.app_info.app_name);
+                 }
+                //$("#newgift").html(data.newshelve_conut+"枚");
+                $("#totalgift").html(data.count+"枚");
+            	layer.close(load);
+            }
+        });
+	}
+
+	function loadgiftlist2(appid,page)
+	{
+
+		$(".lb_more").attr("id","btn_morelb");
+		var load=layer.load(1);
+		$.ajax({
+            url:"https://passport."+weburl+"/gift/get_gift_appid?appid="+appid+"&page="+page+"&pagesize="+pagesize,
+            type:"get",
+            dataType:"jsonp",
+            error: function(){layer.msg("请求失败！")},
+            success: function(data){
+                if(data.count>0)
+                {
+                	var listhtml="";
+                    $.each(data.gift_list,function(i,v){
+                    	listhtml+='<li class="bt_libaolist"><a href="libaodetail.html?gid='+data.gift_list[i].gid+'" class="lineform">'+data.gift_list[i].name+'<i class="tb_pullright1"><img src="../img/tbs66.png"></i><i class="tb_pullright"><img src="../img/tbs2.png"></i></a></li>';
+                    });
+                    $("#giftlist").append(listhtml);
+                }
+            	layer.close(load);
+            }
+        });
+	}
+</script>
+</head>
+
+<body>
+	<div id="page">
+		<div class="tabmenu clearfix">
+			<a class="left50 onmenu" href="libaolist.html">礼包列表</a>
+			<a class="left50" href="lingqu.html">我的礼包</a>
+		</div>
+		<div class="lb_recommard clearfix">
+			<div class="leftimg">
+				<img src="" id="gameico" >
+			</div>
+			<div class="recomgameinfo">
+				<p class="gamename" id="gamename"></p>
+				<p class="gameinfo"><!-- 今日新增<font color="#ff7111" id="newgift">1枚</font>， -->礼包总数<font color="#ff7111" id="totalgift"></font></p>
+			</div>
+			<div id="searchform"><input type="text" class="txt_search" id="txt_keywords" placeholder="请输入礼包名称"><span id="btn_lbsearch"><i class="icoin tb_search" id="btn_search"><img src="../img/tbs11.png" alt="" /></i></span></div>
+		</div>
+        <ul	class="menulist" id="giftlist">
+        	<li class="libaotitle" id="libaotitle"><i class="icoin"><img src="../img/tbs30.png"></i>&nbsp;&nbsp; <span style="vertical-align:middle">礼包列表</span></li>
+        </ul>
+        <a class="lb_more" id="btn_morelb">更多礼包</a>
+    </div>
+</body>
+</html>

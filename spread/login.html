@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="address=no" />
+    <title>亿马推广登录</title>
+    <link rel="stylesheet" type="text/css" href="css/all_style.css" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/api_func.js"></script>
+</head>
+
+<body>
+    <div class="top_bar">
+        <a href="javascript:history.go(-1)" class="back_icon">
+            <img src="images/back.png" />
+        </a>
+        <div class="title_1">亿马登录</div>
+        <a href="javascript:void(0)" class="list_icon">
+        </a>
+    </div>
+    <div class="main_list">
+        <div class="l_t_txt">
+            <div class="l_t_b">
+                <span class="logo"><img src="images/l_icon_1.png"/></span>
+                <span class="txt_title"><i style="color:#ff7111">亿马</i>推广员</span>
+            </div>
+        </div>
+        <div class="l_l_box bg_white">
+            <div class="i_p_txt b-bottom">
+                <span class="l_icon">
+         					<img src="images/l_icon_2.png"/>
+         				</span>
+                <span class="l_txt_i">
+         					<input type="text" name="username"  id="user" placeholder="请输入亿马帐号"/>
+         				</span>
+            </div>
+            <div class="i_p_txt">
+                <span class="l_icon">
+         					<img src="images/l_icon_3.png"/>
+         				</span>
+                <span class="l_txt_i">
+         					<input type="password" name="password"  id="passwd"  placeholder="请输入密码"/>
+         				</span>
+            </div>
+        </div>
+        <div class="btn_submit">
+            <a class="submit">登录</a>
+        </div>
+        <div class="l_l_box_1">
+            <!--<a href="#" class="l_l_a_1">验证手机 即可登录</a>-->
+            <a href="https://wap.lemonade-game.com/forgetpwd.html" class="l_l_a_2" target="_blank">忘记密码</a>
+        </div>
+        <div class="reg_btn">
+            <div class="m_center"><a href="register.html">快速注册</a></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $(".submit").click(function() {
+            var username = $("#user").val();
+            var passwd = $("#passwd").val();
+            login(username, passwd, 0);
+        });
+    });
+    </script>
+</body>
+
+</html>

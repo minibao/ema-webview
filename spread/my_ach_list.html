@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;" charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="address=no" />
+    <title>推广游戏列表</title>
+    <link rel="stylesheet" type="text/css" href="css/all_style.css" />
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/layer/layer.js"></script>
+    <script type="text/javascript" src="js/api_func.js"></script>
+    <script type="text/javascript">
+    $(document).bind("mobileinit", function() {
+        //覆盖的代码
+        $.mobile.ajaxEnabled = false;
+        $.mobile.hashListeningEnabled = false;
+
+    });
+    </script>
+</head>
+
+<body>
+    <div class="top_bar">
+        <a href="javascript:history.go(-1)" class="back_icon">
+            <img src="images/back.png" />
+        </a>
+        <div class="title_1">我的业绩</div>
+        <a href="javascript:void(0)" class="list_icon">
+            <img src="images/option.png" />
+        </a>
+    </div>
+    <div class="main_list">
+        <div class="bg_white date-s"><span class="a-name" id="appname"></span><span id="date_s"></span></div>
+        <div class="ach-actions">
+            <div class="item-act">
+                <span class="act-1"><img src="images/act-icon-1.png"/></span>
+                <span class="act-2">我的业绩</span>
+                <a class="act-4 links_1"><span id="ach_txt">0</span></a>
+                <a class="act-3 links_1"><span ><img src="images/arrow.png"/></span></a>
+            </div>
+            <div class="item-act">
+                <span class="act-1"><img src="images/act-icon-2.png"/></span>
+                <span class="act-2">新增玩家</span>
+                <a class="act-4 links_2"><span id="newuser_txt">0</span></a>
+                <a class="act-3 links_2"><span ><img src="images/arrow.png"/></span></a>
+            </div>
+            <div class="item-act">
+                <span class="act-1"><img src="images/act-icon-3.png"/></span>
+                <span class="act-2">付费玩家</span>
+                <a class="act-4 links_3"><span id="payuser_txt">0</span></a>
+                <a class="act-3 links_3"><span><img src="images/arrow.png"/></span></a>
+            </div>
+        </div>
+        <div class="menu_list" style="display: none">
+            <em class="m_arrow">
+			</em>
+            <ul>
+                <li>
+                    <a href="d_spend2.html"><img src="images/i_ico_1.png" class="ico_s" /><span class="txt">首页</span></a>
+                </li>
+                <li>
+                    <a href="my_spread.html"><img src="images/i_ico_2.png" class="ico_s" /><span class="txt">我的推广</span></a>
+                </li>
+                <li>
+                    <a href="my_ach.html"><img src="images/i_ico_3.png" class="ico_s" /><span class="txt">我的业绩</span></a>
+                </li>
+                <li>
+                    <a href="my_player_list.html"><img src="images/i_ico_4.png" class="ico_s" /><span class="txt">我的玩家</span></a>
+                </li>
+                <li>
+                    <a href="my_info.html"><img src="images/i_ico_5.png" class="ico_s" /><span class="txt">个人信息</span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="loginout"><img src="images/i_ico_6.png" class="ico_s" /><span class="txt">退出登陆</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.2.js"></script>
+    <script type="text/javascript" src="js/mobiscoll/mobiscroll.core.js"></script>
+    <script type="text/javascript" src="js/mobiscoll/mobiscroll.scroller.js"></script>
+    <script type="text/javascript" src="js/mobiscoll/mobiscroll.datetime.js"></script>
+    <script type="text/javascript" src="js/mobiscoll/mobiscroll.list.js"></script>
+    <script type="text/javascript" src="js/mobiscoll/mobiscroll.scroller.android-holo.js"></script>
+    <script type="text/javascript" src="js/mobiscoll/mobiscroll.i18n.zh.js"></script>
+    <link rel="stylesheet" type="text/css" href="js/mobiscoll/css/mobiscroll.scroller.css" />
+    <link rel="stylesheet" type="text/css" href="js/mobiscoll/css/mobiscroll.scroller.android-holo.css" />
+    <link rel="stylesheet" type="text/css" href="js/mobiscoll/css/mobiscroll.animation.css" />
+    <style>
+    .android-holo .dwv {
+        border-bottom: 2px solid #ff610f
+    }
+    
+    .android-holo .dw .dwwol {
+        border-bottom: 2px solid #ff610f;
+        border-top: 2px solid #ff610f
+    }
+    
+    .android-holo .dwwr {
+        color: #ff610f
+    }
+    
+    .ui-loader-default {
+        display: none
+    }
+    </style>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var c_date = new Date();
+        var year = c_date.getFullYear();
+        var month = c_date.getMonth() + 1;
+        if (month < 10) {
+            $("#date_s").html(year + "-0" + month);
+            c_date = year + "-0" + month;
+        } else {
+            $("#date_s").html(year + "-" + month);
+            c_date = year + "-" + month;
+        }
+
+        var appname = getUrlParam("app_name");
+        var appid = getUrlParam("app_id");
+        $("#appname").html(appname);
+        get_ach_num(appid, "ach_txt", "newuser_txt", "payuser_txt", year, month);
+        modify_links(appid, c_date);
+        $("#date_s").click(function() {
+            var scroller_obj = $(this).scroller({
+                preset: 'date',
+                dateOrder: 'yymm',
+                dateFormat: 'yy-mm',
+                startYear: 2010,
+                endYear: 2060,
+                width: 1000,
+                theme: "android-holo light",
+                mode: "mixed",
+                lang: "zh",
+                display: "top",
+                onSelect: function(val) {
+                    var date_arr = val.split("-");
+                    $("#date_s").html(date_arr[0] + "-" + date_arr[1]);
+                    modify_links(appid, date_arr[0] + "-" + date_arr[1]);
+                    get_ach_num(appid, "ach_txt", "newuser_txt", "payuser_txt", date_arr[0], date_arr[1]);
+                },
+            });
+        });
+
+    });
+
+    function modify_links(appid, c_date) {
+        $(".links_1").attr("href", "my_ach_list_list.html?title=我的业绩&app_id=" + appid + "&c_date=" + c_date + "&type=myach");
+        $(".links_2").attr("href", "my_ach_list_list.html?title=新增玩家&app_id=" + appid + "&c_date=" + c_date + "&type=newuser");
+        $(".links_3").attr("href", "my_ach_list_list.html?title=付费玩家&app_id=" + appid + "&c_date=" + c_date + "&type=payuser");
+    }
+    </script>
+</body>
+
+</html>

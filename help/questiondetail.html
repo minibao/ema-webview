@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="format-detection" content="address=no"/>
+<title>帮助中心</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/layer/layer.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script>
+$(document).ready(function(){
+	var askid=getUrlParam("askid");
+	var load=layer.load(1);
+	$.ajax({
+		url:"https://passport."+weburl+"/cs/askinfo?ask_id="+askid,
+		type:"POST",
+		dataType:"jsonp",
+		error: function(){layer.msg("请求失败")},
+		success: function(data){
+			if(data.retcode==0)
+			{
+				layer.close(load);
+				$("#questitle").html(data.data.title);
+				$("#questime").html(data.data.create_ts);
+				$("#quescontent").html(data.data.content);
+				if(data.data.reply_content)
+				{
+					$("#askcontent").html(data.data.reply_content);
+					$("#asktime").html(data.data.update_ts);
+					$("#astatus").show();
+				}
+				else
+				{
+					$("#astatus").remove();
+				}
+			}
+		}
+	});
+});
+</script>
+</head>
+
+<body>
+	<div id="page">
+		<div class="tabmenu clearfix">
+			<a class="left33" href="index.html">问题类型</a>
+			<a class="left33" href="quiz.html">我要提问</a>
+			<a class="left33 onmenu" href="myquestion.html">我的问题</a>
+		</div>
+		<div class="lb_recommard">
+			<ul class="questionlist">
+				<li class="clearfix">
+					<span class="questb"><img src="../img/tbs70.png" /></span>
+					<a href="#" class="questct">
+						<p class="questitle"><span id="questitle">帐号问题</span><span class="questime" id="questime">2015-7-10 15:25</span></p>
+						<p class="quescontent" id="quescontent">信息框默认不显示图标。当你想显示图标时，默认皮肤可以传入0-6如果是加载层，可以传入0-2</p>
+					</a>
+				</li>
+				<li class="clearfix" id="astatus" style="display:none">
+					<span class="questb"><img src="../img/tbs69.png" /></span>
+					<a href="#" class="questct">
+						<p class="questitle"><span class="questime" id="asktime">2015-7-10 15:25</span></p>
+						<p class="quescontent" id="askcontent">信息框模式时，btn默认是一个确认按钮，其它层类型则默认不显示，加载层和tips层则无效。当您只想自定义一个按钮时，你可以btn: '我知道了'，当你要定义两个按钮时，你可以btn: ['yes', 'no']。当然，你也可以定义更多按钮</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+    </div>
+</body>
+</html>
